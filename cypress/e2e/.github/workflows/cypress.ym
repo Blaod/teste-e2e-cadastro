@@ -1,0 +1,32 @@
+
+name: Testes E2E com Cypress
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Executar testes Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          start: node server.js
+          wait-on: http://localhost:3000
+          browser: electron

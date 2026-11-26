@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Usuário</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 320px;
+      box-shadow: 0 4px 15px #0002;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    input, button {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 6px;
+    }
+
+    input {
+      border: 1px solid #ccc;
+    }
+
+    button {
+      border: none;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+    }
+
+    #mensagem {
+      margin-top: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Cadastro</h1>
+
+    <form id="formCadastro">
+      <input id="nome" type="text" placeholder="Nome" required>
+      <input id="email" type="text" placeholder="E-mail" required>
+      <input id="senha" type="password" placeholder="Senha" required>
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <p id="mensagem" role="alert"></p>
+  </div>
+
+  <script>
+    document.getElementById("formCadastro").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const nome = document.getElementById("nome").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const senha = document.getElementById("senha").value;
+      const mensagem = document.getElementById("mensagem");
+
+      const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+      if (!nome || !email || !senha) {
+        mensagem.textContent = "Preencha todos os campos.";
+        mensagem.style.color = "red";
+      } else if (!emailValido) {
+        mensagem.textContent = "E-mail inválido.";
+        mensagem.style.color = "red";
+      } else {
+        mensagem.textContent = "Cadastro realizado com sucesso!";
+        mensagem.style.color = "green";
+      }
+    });
+  </script>
+</body>
+</html>
