@@ -8,6 +8,7 @@ const server = http.createServer((req, res) => {
 
   fs.readFile(filePath, (err, content) => {
     if (err) {
+      console.error("Erro ao carregar index.html:", err);
       res.writeHead(500);
       res.end("Erro ao carregar a página.");
       return;
@@ -19,6 +20,11 @@ const server = http.createServer((req, res) => {
 
     res.end(content);
   });
+});
+
+server.on("error", (err) => {
+  console.error("Erro no servidor:", err);
+  process.exit(1);
 });
 
 server.listen(3000, "0.0.0.0", () => {
