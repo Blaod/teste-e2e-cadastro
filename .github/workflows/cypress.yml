@@ -24,9 +24,18 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      - name: Executar testes E2E
-        uses: cypress-io/github-action@v6
-        with:
-          start: node server.js
-          wait-on: http://localhost:3000
-          browser: electron
+      - name: Iniciar servidor
+        run: |
+          node server.js > server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://localhost:3000 > /dev/null; then
+              echo "Servidor iniciado com sucesso!"
+              exit 0
+            fi
+            sleep 1
+          done
+          cat server.log
+          exit 1
+
+      - name: Executar testes Cypress
+        run: npx cypress run
